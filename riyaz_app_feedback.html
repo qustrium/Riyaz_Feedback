@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Riyaz - Send Feedback</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            400: '#FACC15',
+                            500: '#EAB308',
+                            600: '#CA8A04',
+                            700: '#A16207',
+                            accent: '#D4AF37',
+                            hover: '#F3E5AB'
+                        },
+                        dark: {
+                            bg: '#0F1115',
+                            card: '#161920',
+                            input: '#1F2430',
+                            border: '#2E3444'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0F1115;
+            color: #E2E8F0;
+        }
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #FFF1B0 0%, #D4AF37 50%, #996515 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .gold-border-glow:focus-within {
+            box-shadow: 0 0 12px rgba(212, 175, 55, 0.25);
+            border-color: #D4AF37;
+        }
+        .category-chip.active {
+            background-color: #D4AF37;
+            color: #0F1115;
+            border-color: #D4AF37;
+            font-weight: 600;
+        }
+        .star-rating svg {
+            transition: transform 0.15s ease, color 0.15s ease;
+        }
+        .star-rating svg:hover {
+            transform: scale(1.15);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between font-sans antialiased selection:bg-gold-accent selection:text-black">
+
+    <!-- Header Navigation -->
+    <header class="border-b border-dark-border/60 bg-dark-bg/80 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-gold-accent to-gold-700 flex items-center justify-center shadow-lg shadow-gold-accent/10">
+                    <svg class="w-5 h-5 text-dark-bg fill-current" viewBox="0 0 24 24">
+                        <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold tracking-tight gold-gradient-text">Riyaz</h1>
+                    <p class="text-xs text-gray-400">Orchestra Practice Recorder</p>
+                </div>
+            </div>
+            <a href="#" onclick="window.close()" class="text-xs text-gray-400 hover:text-gold-accent transition">Close Form</a>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-2xl mx-auto w-full px-4 py-8 flex-grow">
+        
+        <!-- Intro Header -->
+        <div class="text-center mb-8">
+            <h2 class="text-2xl sm:text-3xl font-bold mb-2 text-white">We Value Your Experience</h2>
+            <p class="text-gray-400 text-sm sm:text-base max-w-md mx-auto">
+                Help us refine your musical practice environment. Share your thoughts, bugs, or feature suggestions below.
+            </p>
+        </div>
+
+        <!-- Feedback Form Box -->
+        <div class="bg-dark-card border border-dark-border rounded-2xl p-6 sm:p-8 shadow-2xl relative overflow-hidden">
+            
+            <!-- Success Overlay Animation Container -->
+            <div id="successOverlay" class="hidden absolute inset-0 bg-dark-card z-20 flex flex-col items-center justify-center p-6 text-center animate-fade-in">
+                <div class="w-16 h-16 bg-gold-accent/20 rounded-full flex items-center justify-center mb-4 text-gold-accent ring-8 ring-gold-accent/10 animate-bounce">
+                    <svg class="w-8 h-8 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
+                </div>
+                <h3 class="text-2xl font-bold text-white mb-2">Thank You!</h3>
+                <p class="text-gray-400 text-sm max-w-sm mb-6">Your feedback has been received. We review every response carefully to improve your Riyaz practice sessions.</p>
+                <button onclick="resetForm()" class="px-6 py-2.5 rounded-xl bg-dark-input hover:bg-dark-border text-gold-accent text-sm font-medium transition border border-gold-accent/30">
+                    Send Another Response
+                </button>
+            </div>
+
+            <form id="feedbackForm" onsubmit="handleFormSubmit(event)" class="space-y-6">
+                
+                <!-- 1. Star Rating -->
+                <div>
+                    <label class="block text-xs uppercase tracking-wider text-gray-400 font-semibold mb-3">Overall Rating</label>
+                    <div class="flex items-center justify-center space-x-2 bg-dark-bg/60 p-4 rounded-xl border border-dark-border/80 star-rating" id="starContainer">
+                        <!-- 5 Stars generated dynamically or hardcoded -->
+                        <button type="button" onclick="setRating(1)" class="p-1 text-gray-600 hover:text-gold-accent focus:outline-none">
+                            <svg class="w-8 h-8 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </button>
+                        <button type="button" onclick="setRating(2)" class="p-1 text-gray-600 hover:text-gold-accent focus:outline-none">
+                            <svg class="w-8 h-8 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </button>
+                        <button type="button" onclick="setRating(3)" class="p-1 text-gray-600 hover:text-gold-accent focus:outline-none">
+                            <svg class="w-8 h-8 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </button>
+                        <button type="button" onclick="setRating(4)" class="p-1 text-gray-600 hover:text-gold-accent focus:outline-none">
+                            <svg class="w-8 h-8 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </button>
+                        <button type="button" onclick="setRating(5)" class="p-1 text-gray-600 hover:text-gold-accent focus:outline-none">
+                            <svg class="w-8 h-8 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </button>
+                    </div>
+                    <p id="ratingLabel" class="text-center text-xs text-gray-500 mt-2 h-4">Select your rating</p>
+                </div>
+
+                <!-- 2. Category Selector -->
+                <div>
+                    <label class="block text-xs uppercase tracking-wider text-gray-400 font-semibold mb-3">Topic / Category</label>
+                    <div class="flex flex-wrap gap-2" id="categoryChips">
+                        <button type="button" onclick="toggleCategory(this, 'BPM Detection')" class="category-chip px-3.5 py-1.5 rounded-lg border border-dark-border text-xs text-gray-300 hover:border-gold-accent transition">BPM Detection</button>
+                        <button type="button" onclick="toggleCategory(this, 'Audio Quality')" class="category-chip px-3.5 py-1.5 rounded-lg border border-dark-border text-xs text-gray-300 hover:border-gold-accent transition">Audio Quality</button>
+                        <button type="button" onclick="toggleCategory(this, 'UI & Controls')" class="category-chip px-3.5 py-1.5 rounded-lg border border-dark-border text-xs text-gray-300 hover:border-gold-accent transition">UI & Controls</button>
+                        <button type="button" onclick="toggleCategory(this, 'Takes & Storage')" class="category-chip px-3.5 py-1.5 rounded-lg border border-dark-border text-xs text-gray-300 hover:border-gold-accent transition">Takes & Storage</button>
+                        <button type="button" onclick="toggleCategory(this, 'Feature Request')" class="category-chip px-3.5 py-1.5 rounded-lg border border-dark-border text-xs text-gray-300 hover:border-gold-accent transition">Feature Request</button>
+                        <button type="button" onclick="toggleCategory(this, 'Bug Report')" class="category-chip px-3.5 py-1.5 rounded-lg border border-dark-border text-xs text-gray-300 hover:border-gold-accent transition">Bug Report</button>
+                    </div>
+                </div>
+
+                <!-- 3. Feedback Details Text Area -->
+                <div class="gold-border-glow border border-dark-border rounded-xl bg-dark-bg/40 transition">
+                    <label for="feedbackText" class="sr-only">Detailed Feedback</label>
+                    <textarea id="feedbackText" rows="4" required placeholder="Describe your experience, report a bug, or suggest a new feature..." class="w-full bg-transparent p-4 text-sm text-gray-100 placeholder-gray-500 focus:outline-none resize-none"></textarea>
+                </div>
+
+                <!-- 4. File Attachment Option -->
+                <div>
+                    <label class="block text-xs uppercase tracking-wider text-gray-400 font-semibold mb-2">Attach Audio Recording / Screenshot (Optional)</label>
+                    <div class="relative border border-dashed border-dark-border hover:border-gold-accent/60 rounded-xl p-4 bg-dark-bg/20 text-center transition cursor-pointer" onclick="document.getElementById('fileInput').click()">
+                        <input type="file" id="fileInput" class="hidden" accept="audio/*,image/*" onchange="handleFileSelect(event)">
+                        <div class="flex flex-col items-center justify-center space-y-1">
+                            <svg class="w-6 h-6 text-gray-400 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
+                            </svg>
+                            <span class="text-xs text-gray-300 font-medium" id="fileNameDisplay">Click to browse audio file or screenshot</span>
+                            <span class="text-[10px] text-gray-500">MP3, WAV, AAC, PNG, JPG (Max 15MB)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. Optional Email Input -->
+                <div>
+                    <label for="emailInput" class="block text-xs uppercase tracking-wider text-gray-400 font-semibold mb-2">Your Email (Optional, for follow-ups)</label>
+                    <div class="gold-border-glow border border-dark-border rounded-xl bg-dark-bg/40 transition flex items-center px-3.5">
+                        <svg class="w-4 h-4 text-gray-500 mr-2.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        </svg>
+                        <input type="email" id="emailInput" placeholder="musician@orchestra.org" class="w-full bg-transparent py-3 text-sm text-gray-100 placeholder-gray-500 focus:outline-none">
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="pt-2">
+                    <button type="submit" class="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-gold-accent via-gold-500 to-gold-700 text-dark-bg font-bold text-sm tracking-wide shadow-lg shadow-gold-accent/15 hover:brightness-110 active:scale-[0.99] transition duration-150 flex items-center justify-center space-x-2">
+                        <span>Submit Feedback</span>
+                        <svg class="w-4 h-4 text-dark-bg fill-current" viewBox="0 0 20 20">
+                            <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"/>
+                        </svg>
+                    </button>
+                </div>
+
+            </form>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-dark-border/40 py-6 text-center text-xs text-gray-500">
+        <p>Riyaz Practice Recorder &bull; Local Storage & Optional Drive Backup &bull; Zero Ads & Tracking</p>
+    </footer>
+
+    <!-- Interactive Logic Script -->
+    <script>
+        let selectedRating = 0;
+        let selectedCategories = new Set();
+        const ratingTexts = ["Poor", "Fair", "Good", "Very Good", "Excellent!"];
+
+        function setRating(rating) {
+            selectedRating = rating;
+            const stars = document.querySelectorAll('#starContainer button svg');
+            stars.forEach((star, index) => {
+                if (index < rating) {
+                    star.classList.remove('text-gray-600');
+                    star.classList.add('text-gold-accent');
+                } else {
+                    star.classList.remove('text-gold-accent');
+                    star.classList.add('text-gray-600');
+                }
+            });
+            document.getElementById('ratingLabel').innerText = ratingTexts[rating - 1];
+            document.getElementById('ratingLabel').classList.remove('text-gray-500');
+            document.getElementById('ratingLabel').classList.add('text-gold-accent', 'font-medium');
+        }
+
+        function toggleCategory(button, categoryName) {
+            if (selectedCategories.has(categoryName)) {
+                selectedCategories.delete(categoryName);
+                button.classList.remove('active');
+            } else {
+                selectedCategories.add(categoryName);
+                button.classList.add('active');
+            }
+        }
+
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            const display = document.getElementById('fileNameDisplay');
+            if (file) {
+                display.innerText = `Selected: ${file.name} (${(file.size / (1024 * 1024)).toFixed(2)} MB)`;
+                display.classList.add('text-gold-accent');
+            } else {
+                display.innerText = "Click to browse audio file or screenshot";
+                display.classList.remove('text-gold-accent');
+            }
+        }
+
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            // Show smooth success state overlay
+            document.getElementById('successOverlay').classList.remove('hidden');
+        }
+
+        function resetForm() {
+            document.getElementById('feedbackForm').reset();
+            selectedRating = 0;
+            selectedCategories.clear();
+            
+            // Reset stars UI
+            const stars = document.querySelectorAll('#starContainer button svg');
+            stars.forEach(star => {
+                star.classList.remove('text-gold-accent');
+                star.classList.add('text-gray-600');
+            });
+            document.getElementById('ratingLabel').innerText = "Select your rating";
+            document.getElementById('ratingLabel').classList.add('text-gray-500');
+
+            // Reset category chips UI
+            const chips = document.querySelectorAll('.category-chip');
+            chips.forEach(chip => chip.classList.remove('active'));
+
+            // Reset file upload label
+            document.getElementById('fileNameDisplay').innerText = "Click to browse audio file or screenshot";
+            document.getElementById('fileNameDisplay').classList.remove('text-gold-accent');
+
+            // Hide overlay
+            document.getElementById('successOverlay').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
